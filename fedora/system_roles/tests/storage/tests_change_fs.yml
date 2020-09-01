@@ -5,7 +5,8 @@
     storage_safe_mode: false
     mount_location: '/opt/test1'
     volume_size: '5g'
-    fs_after: "{{ (ansible_distribution == 'RedHat' and ansible_distribution_major_version == '6') | ternary('ext4', 'xfs') }}"
+    fs_after: "{{ (ansible_distribution == 'RedHat' and ansible_distribution_major_version\
+      \ == '6') | ternary('ext4', 'xfs') }}"
 
   tasks:
     - include_role:

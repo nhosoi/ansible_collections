@@ -8,7 +8,8 @@
 # 1. An exception is to be captured and check the expected error message was returned or not.
 #
 ---
-- name: Test the server configuration containing conflicted tls inputs in the remote input
+- name: Test the server configuration containing conflicted tls inputs in the remote
+    input
   hosts: all
   vars:
     __test_ca_cert_name: test-ca.crt
@@ -24,8 +25,7 @@
         - name: Generate fake key/certs files
           copy:
             dest: "{{ item }}"
-            content:
-              This is a fake {{ item }}.
+            content: This is a fake {{ item }}.
           delegate_to: localhost
           loop:
             - "{{ __test_ca_cert }}"
@@ -74,5 +74,6 @@
         - debug:
             msg: Caught an expected error - {{ ansible_failed_result }}
         - assert:
-            that: item.msg is not defined or item.msg is defined and item.msg == __expected_error
+            that: item.msg is not defined or item.msg is defined and item.msg ==
+              __expected_error
           loop: "{{ ansible_failed_result.results }}"

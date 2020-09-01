@@ -34,9 +34,10 @@
       assert:
         that: rsyslog_d_file_count.matched <= 2
 
-    # Checking 'error' in stdout from systemctl status is for detecting the case in which rsyslog is running,
-    # but some functionality is disabled due to some error, e.g., error: 'tls.cacert' file couldn't be accessed.
+  # Checking 'error' in stdout from systemctl status is for detecting the case in which rsyslog is running,
+  # but some functionality is disabled due to some error, e.g., error: 'tls.cacert' file couldn't be accessed.
     - name: Check rsyslog errors
       command: systemctl status rsyslog
       register: __result
-      failed_when: "'error' in __result.stdout or 'a RainerScript command' in __result.stdout or __result is failed"
+      failed_when: "'error' in __result.stdout or 'a RainerScript command' in __result.stdout\
+        \ or __result is failed"

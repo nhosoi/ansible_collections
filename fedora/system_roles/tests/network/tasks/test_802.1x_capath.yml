@@ -4,12 +4,12 @@
   debug:
     msg: "##################################################"
 - set_fact:
-    # Fixed versions/NVRs:
-    # 1.25.2
-    # NetworkManager-1.24.2-1.fc33
-    # NetworkManager-1.22.14-1.fc32
-    # NetworkManager-1.20.12-1.fc31
-    # 1.18.8
+  # Fixed versions/NVRs:
+  # 1.25.2
+  # NetworkManager-1.24.2-1.fc33
+  # NetworkManager-1.22.14-1.fc32
+  # NetworkManager-1.20.12-1.fc31
+  # 1.18.8
     __NM_capath_ignored_NVRs:
       - NetworkManager-1.18.0-5.el7.x86_64
       - NetworkManager-1.18.4-3.el7.x86_64
@@ -29,8 +29,7 @@
     dest: "/etc/pki/tls/my_ca_certs/cacert.pem"
     mode: 0644
 - name: Hash cacert
-  command: openssl x509 -hash -noout
-    -in /etc/pki/tls/my_ca_certs/cacert.pem
+  command: openssl x509 -hash -noout -in /etc/pki/tls/my_ca_certs/cacert.pem
   register: cacert_hash
 - name: Add symlink for cacert
   file:
@@ -83,16 +82,14 @@
         expected_failure: __network_NM_NVR.stdout in __NM_capath_ignored_NVRs
         failure: __network_connections_result.failed
       assert:
-        that: (failure and expected_failure) or
-          (not failure and not expected_failure)
-        msg: "Role {{ failure and 'failed' or 'did not fail' }} but was expected
-          {{ expected_failure and '' or 'not' }} to fail.
-          NM NVR: {{ __network_NM_NVR.stdout }}"
+        that: (failure and expected_failure) or (not failure and not expected_failure)
+        msg: "Role {{ failure and 'failed' or 'did not fail' }} but was expected\
+          \ {{ expected_failure and '' or 'not' }} to fail. NM NVR: {{ __network_NM_NVR.stdout\
+          \ }}"
     - name: Assert role failure
       assert:
-        that: "
-          'ieee802_1x.ca_path specified but not supported by NetworkManager'
-          in __network_connections_result.stderr"
+        that: " 'ieee802_1x.ca_path specified but not supported by NetworkManager'\
+          \ in __network_connections_result.stderr"
       when:
         - __network_connections_result.failed
 

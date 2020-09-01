@@ -10,7 +10,7 @@
 
   tasks:
     - name: Install EPEL for RHEL and CentOS
-      # yamllint disable-line rule:line-length
+    # yamllint disable-line rule:line-length
       command: "yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
       when: ansible_distribution in ["CentOS", "RedHat"]
 
@@ -57,16 +57,16 @@
         rsync_opts:
           - "--exclude=.pyc"
           - "--exclude=__pycache__"
-      when: False
+      when: false
 
-    # TODO: using tar and copying the file is a workaround for the synchronize
-    # module that does not work in test-harness. Related issue:
-    # https://github.com/linux-system-roles/test-harness/issues/102
-    #
+  # TODO: using tar and copying the file is a workaround for the synchronize
+  # module that does not work in test-harness. Related issue:
+  # https://github.com/linux-system-roles/test-harness/issues/102
+  #
     - name: Create Tar file
-      shell: 'tar -cvf {{ git_top_directory.stdout }}/testrepo.tar
-             --exclude "*.pyc" --exclude "__pycache__" --exclude testrepo.tar
-             -C {{ git_top_directory.stdout }} .'
+      shell: 'tar -cvf {{ git_top_directory.stdout }}/testrepo.tar --exclude "*.pyc"
+        --exclude "__pycache__" --exclude testrepo.tar -C {{ git_top_directory.stdout
+        }} .'
       delegate_to: localhost
 
     - name: Copy testrepo.tar to the remote system

@@ -15,9 +15,9 @@
         min_size: "{{ volume_size }}"
         max_return: 1
 
-    ##
-    ## Disk
-    ##
+  ##
+  ## Disk
+  ##
     - name: Test for correct handling of new encrypted volume w/ no key
       block:
         - name: Create an encrypted disk volume w/ default fs
@@ -44,12 +44,11 @@
 
         - name: Verify the output of the keyless luks test
           assert:
-            that: "blivet_output.failed and
-                   blivet_output.msg|regex_search('encrypted volume.*missing key') and
-                   not blivet_output.changed"
+            that: "blivet_output.failed and blivet_output.msg|regex_search('encrypted\
+              \ volume.*missing key') and not blivet_output.changed"
             msg: "Unexpected behavior w/ encrypted pool w/ no key"
 
-    # encrypted disk volume
+  # encrypted disk volume
     - name: Create an encrypted disk volume w/ default fs
       include_role:
         name: fedora.system_roles.storage
@@ -92,9 +91,9 @@
 
     - include_tasks: verify-role-results.yml
 
-    ##
-    ## Partition
-    ##
+  ##
+  ## Partition
+  ##
 
     - name: Test for correct handling of new encrypted volume w/ no key
       block:
@@ -126,9 +125,8 @@
 
         - name: Verify the output of the keyless luks test
           assert:
-            that: "blivet_output.failed and
-                   blivet_output.msg|regex_search('encrypted volume.*missing key') and
-                   not blivet_output.changed"
+            that: "blivet_output.failed and blivet_output.msg|regex_search('encrypted\
+              \ volume.*missing key') and not blivet_output.changed"
             msg: "Unexpected behavior w/ encrypted pool w/ no key"
 
     - name: Create an encrypted partition volume w/ default fs
@@ -206,9 +204,9 @@
             state: absent
           changed_when: false
 
-    ##
-    ## LVM
-    ##
+  ##
+  ## LVM
+  ##
 
     - name: Test for correct handling of new encrypted volume w/ no key
       block:
@@ -239,9 +237,8 @@
 
         - name: Verify the output of the keyless luks test
           assert:
-            that: "blivet_output.failed and
-                   blivet_output.msg|regex_search('encrypted volume.*missing key') and
-                   not blivet_output.changed"
+            that: "blivet_output.failed and blivet_output.msg|regex_search('encrypted\
+              \ volume.*missing key') and not blivet_output.changed"
             msg: "Unexpected behavior w/ encrypted pool w/ no key"
 
     - name: Create an encrypted lvm volume w/ default fs

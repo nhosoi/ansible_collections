@@ -4,8 +4,8 @@
   vars:
     ffparams:
       files:
-        - "{{ ansible_facts['distribution'] }}_\
-          {{ ansible_facts['distribution_major_version'] }}.yml"
+        - "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version']\
+          \ }}.yml"
         - "{{ ansible_facts['distribution'] }}.yml"
         - "{{ ansible_facts['os_family'] }}.yml"
       paths:

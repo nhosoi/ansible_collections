@@ -5,7 +5,8 @@
   vars:
     pcp_pmlogger_discard: "{{ metrics_retention_days }}"
     pcp_target_hosts: "{{ metrics_monitored_hosts }}"
-    pcp_rest_api: "{{ metrics_query_service|d(false)|bool or metrics_graph_service|d(false)|bool }}"
+    pcp_rest_api: "{{ metrics_query_service|d(false)|bool or metrics_graph_service|d(false)|bool\
+      \ }}"
   include_role:
-    name: ".performancecopilot.pcp"
+    name: "fedora.system_roles.__performancecopilot_pcp"
   when: metrics_provider == 'pcp'

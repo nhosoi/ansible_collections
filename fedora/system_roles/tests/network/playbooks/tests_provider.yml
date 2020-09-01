@@ -17,12 +17,12 @@
         - include_tasks: tasks/run_test.yml
           vars:
             state: present
-            lsr_description: I can manage a veth interface with NM after I
-                managed it with initscripts.
+            lsr_description: I can manage a veth interface with NM after I managed
+              it with initscripts.
             lsr_setup:
               - tasks/setup_test_interface.yml
-              # run role once with defaults but nm provider to ensure that
-              # NetworKManager is running
+            # run role once with defaults but nm provider to ensure that
+            # NetworKManager is running
               - tasks/provider/default_with_nm.yml
               - tasks/provider/create_and_remove_with_initscripts.yml
             lsr_test:

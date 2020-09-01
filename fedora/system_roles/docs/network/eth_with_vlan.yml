@@ -4,7 +4,7 @@
   vars:
     network_connections:
 
-      # Create a profile for the underlying device of the VLAN.
+    # Create a profile for the underlying device of the VLAN.
       - name: prod2
         type: ethernet
         autoconnect: no
@@ -14,8 +14,8 @@
           dhcp4: no
           auto6: no
 
-      # on top of it, create a VLAN with ID 100 and static
-      # addressing
+    # on top of it, create a VLAN with ID 100 and static
+    # addressing
       - name: prod2.100
         state: up
         type: vlan

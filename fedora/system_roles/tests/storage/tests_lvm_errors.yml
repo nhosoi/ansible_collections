@@ -11,8 +11,8 @@
       - '/non/existent/disk'
     invalid_size: 'xyz GiB'
     unused_disk_subfact: '{{ ansible_devices[unused_disks[0]] }}'
-    too_large_size: '{{ (unused_disk_subfact.sectors|int + 1) *
-                        unused_disk_subfact.sectorsize|int }}'
+    too_large_size: '{{ (unused_disk_subfact.sectors|int + 1) * unused_disk_subfact.sectorsize|int
+      }}'
 
   tasks:
     - include_role:
@@ -48,18 +48,18 @@
               - ansible_failed_result.msg != 'UNREACH'
             msg: "Role has not failed when it should have"
 
-    # the following does not work properly
-    # - debug:
-    #     msg: "{{ 'failed: ' + blivet_output.failed | string +
-    #              'msg: ' + blivet_output.msg +
-    #              'changed: ' + blivet_output.changed | string }}"
+  # the following does not work properly
+  # - debug:
+  #     msg: "{{ 'failed: ' + blivet_output.failed | string +
+  #              'msg: ' + blivet_output.msg +
+  #              'changed: ' + blivet_output.changed | string }}"
 
-    # - name: Verify the output
-    #   assert:
-    #     that: "{{ blivet_output.failed and
-    #               blivet_output.msg|regex_search('unable to resolve.+disk')|length>0 and
-    #               not blivet_output.changed }}"
-    #     msg: "Unexpected behavior w/ non-existent pool disk"
+  # - name: Verify the output
+  #   assert:
+  #     that: "{{ blivet_output.failed and
+  #               blivet_output.msg|regex_search('unable to resolve.+disk')|length>0 and
+  #               not blivet_output.changed }}"
+  #     msg: "Unexpected behavior w/ non-existent pool disk"
 
     - name: Test for correct handling of invalid size specification.
       block:
@@ -86,13 +86,13 @@
               - ansible_failed_result.msg != 'UNREACH'
             msg: "Role has not failed when it should have"
 
-    # the following does not work properly
-    # - name: Verify the output
-    #   assert:
-    #     that: "{{ blivet_output.failed and
-    #               blivet_output.msg|regex_search('invalid size.+for volume') and
-    #               not blivet_output.changed }}"
-    #     msg: "Unexpected behavior w/ invalid volume size"
+  # the following does not work properly
+  # - name: Verify the output
+  #   assert:
+  #     that: "{{ blivet_output.failed and
+  #               blivet_output.msg|regex_search('invalid size.+for volume') and
+  #               not blivet_output.changed }}"
+  #     msg: "Unexpected behavior w/ invalid volume size"
 
     - name: Test for correct handling of too-large volume size.
       block:
@@ -119,13 +119,13 @@
               - ansible_failed_result.msg != 'UNREACH'
             msg: "Role has not failed when it should have"
 
-    # the following does not work properly
-    # - name: Verify the output
-    #   assert:
-    #     that: "{{ blivet_output.failed and
-    #               blivet_output.msg|regex_search('size.+exceeds.+space in pool') and
-    #               not blivet_output.changed }}"
-    #     msg: "Unexpected behavior w/ too-large volume size"
+  # the following does not work properly
+  # - name: Verify the output
+  #   assert:
+  #     that: "{{ blivet_output.failed and
+  #               blivet_output.msg|regex_search('size.+exceeds.+space in pool') and
+  #               not blivet_output.changed }}"
+  #     msg: "Unexpected behavior w/ too-large volume size"
 
     - name: Test for correct handling of non-list disk specification.
       block:
@@ -152,13 +152,13 @@
               - ansible_failed_result.msg != 'UNREACH'
             msg: "Role has not failed when it should have"
 
-    # the following does not work properly
-    # - name: Verify the output
-    #   assert:
-    #     that: "{{ blivet_output.failed and
-    #               blivet_output.msg|regex_search('disk.+list') and
-    #               not blivet_output.changed }}"
-    #     msg: "Unexpected behavior w/ disks not in list form"
+  # the following does not work properly
+  # - name: Verify the output
+  #   assert:
+  #     that: "{{ blivet_output.failed and
+  #               blivet_output.msg|regex_search('disk.+list') and
+  #               not blivet_output.changed }}"
+  #     msg: "Unexpected behavior w/ disks not in list form"
 
     - name: Test for correct handling of missing disk specification.
       block:
@@ -185,13 +185,13 @@
               - ansible_failed_result.msg != 'UNREACH'
             msg: "Role has not failed when it should have"
 
-    # the following does not work properly
-    # - name: Verify the output
-    #   assert:
-    #     that: "{{ blivet_output.failed and
-    #               blivet_output.msg|regex_search('no disks.+pool') and
-    #               not blivet_output.changed }}"
-    #     msg: "Unexpected behavior w/ no disks specified"
+  # the following does not work properly
+  # - name: Verify the output
+  #   assert:
+  #     that: "{{ blivet_output.failed and
+  #               blivet_output.msg|regex_search('no disks.+pool') and
+  #               not blivet_output.changed }}"
+  #     msg: "Unexpected behavior w/ no disks specified"
 
     - name: Test for correct handling of LVM volume not defined within a pool.
       block:
@@ -217,13 +217,13 @@
               - ansible_failed_result.msg != 'UNREACH'
             msg: "Role has not failed when it should have"
 
-    # the following does not work properly
-    # - name: Verify the output
-    #   assert:
-    #     that: "{{ blivet_output.failed and
-    #               blivet_output.msg|regex_search('failed to find pool .+ for volume') and
-    #               not blivet_output.changed }}"
-    #     msg: "Unexpected behavior w/ LVM volume defined outside of any pool"
+  # the following does not work properly
+  # - name: Verify the output
+  #   assert:
+  #     that: "{{ blivet_output.failed and
+  #               blivet_output.msg|regex_search('failed to find pool .+ for volume') and
+  #               not blivet_output.changed }}"
+  #     msg: "Unexpected behavior w/ LVM volume defined outside of any pool"
 
     - name: Test for correct handling of duplicate pool names
       block:
@@ -252,9 +252,8 @@
 
         - name: Verify the output of the duplicate pools test
           assert:
-            that: "blivet_output.failed and
-                   'multiple pools with the same name' in blivet_output.msg and
-                   not blivet_output.changed"
+            that: "blivet_output.failed and 'multiple pools with the same name'\
+              \ in blivet_output.msg and not blivet_output.changed"
             msg: "Unexpected behavior w/ multiple pools sharing one name"
 
     - name: Test for correct handling of duplicate volume names within a pool
@@ -290,10 +289,10 @@
 
         - name: Verify the output of the duplicate volumes test
           assert:
-            that: "blivet_output.failed and
-                   blivet_output.msg|regex_search('multiple volumes in pool.*with the same name') and
-                   not blivet_output.changed"
-            msg: "Unexpected behavior w/ multiple volumes within a pool sharing a name"
+            that: "blivet_output.failed and blivet_output.msg|regex_search('multiple\
+              \ volumes in pool.*with the same name') and not blivet_output.changed"
+            msg: "Unexpected behavior w/ multiple volumes within a pool sharing\
+              \ a name"
 
     - name: Create a pool
       include_role:
@@ -336,14 +335,15 @@
 
         - name: Verify the output
           assert:
-            that: "{{ blivet_output.failed and
-                      blivet_output.msg|regex_search('cannot remove existing formatting on volume.*in safe mode') and
-                      not blivet_output.changed }}"
+            that: "{{ blivet_output.failed and blivet_output.msg|regex_search('cannot\
+              \ remove existing formatting on volume.*in safe mode') and not blivet_output.changed\
+              \ }}"
             msg: "Unexpected behavior w/ existing data on specified disks"
 
     - name: Test for correct handling of safe_mode with existing pool
       block:
-        - name: Try to create LVM pool on disks that already belong to an existing pool
+        - name: Try to create LVM pool on disks that already belong to an existing
+            pool
           include_role:
             name: fedora.system_roles.storage
           vars:
@@ -365,9 +365,9 @@
 
         - name: Verify the output
           assert:
-            that: "{{ blivet_output.failed and
-                      blivet_output.msg|regex_search('cannot remove existing formatting and/or devices on disk.*in safe mode') and
-                      not blivet_output.changed }}"
+            that: "{{ blivet_output.failed and blivet_output.msg|regex_search('cannot\
+              \ remove existing formatting and/or devices on disk.*in safe mode')\
+              \ and not blivet_output.changed }}"
             msg: "Unexpected behavior w/ existing data on specified disks"
 
     - name: Test for correct handling of safe_mode
@@ -396,9 +396,8 @@
 
     - name: Verify the output
       assert:
-        that: "blivet_output.failed and
-               blivet_output.msg|regex_search('cannot remove existing formatting on volume.*in safe mode') and
-                  not blivet_output.changed"
+        that: "blivet_output.failed and blivet_output.msg|regex_search('cannot remove\
+          \ existing formatting on volume.*in safe mode') and not blivet_output.changed"
         msg: "Unexpected behavior w/ existing data on specified disks"
 
     - name: Clean up

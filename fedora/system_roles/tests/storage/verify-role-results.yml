@@ -12,7 +12,7 @@
 # Collect some information about the current state of the system.
 #
 - name: Collect info about the volumes.
-  blockdev_info:
+  fedora.system_roles.blockdev_info:
   register: storage_test_blkinfo
   changed_when: false
 
@@ -38,7 +38,7 @@
 
 - name: Clean up variable namespace
   set_fact:
-    storage_test_pool: null
+    storage_test_pool:
 
 #
 # Verify standalone volumes.
@@ -55,7 +55,7 @@
 #
 - name: Clean up variable namespace
   set_fact:
-    storage_test_fstab: null
-    storage_test_crypttab: null
-    storage_test_blkinfo: null
-    storage_test_volume: null
+    storage_test_fstab:
+    storage_test_crypttab:
+    storage_test_blkinfo:
+    storage_test_volume:

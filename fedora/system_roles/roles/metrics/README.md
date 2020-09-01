@@ -63,7 +63,7 @@ weeks worth of data retained before culling.
   vars:
     metrics_retention_days: 7
   roles:
-    - linux-system-roles.metrics
+    - fedora.system_roles.metrics
 ```
 
 Scalable metric recording, analysis and visualization setup for
@@ -76,7 +76,7 @@ endpoint, graphs and scalable querying.
     metrics_graph_service: yes
     metrics_query_service: yes
   roles:
-    - linux-system-roles.metrics
+    - fedora.system_roles.metrics
 ```
 
 Centralized metric recording setup for several remote hosts and
@@ -91,7 +91,7 @@ endpoint, graphs and scalable querying.
     metrics_graph_service: yes
     metrics_query_service: yes
   roles:
-    - linux-system-roles.metrics
+    - fedora.system_roles.metrics
 ```
 
 

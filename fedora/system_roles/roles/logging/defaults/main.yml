@@ -36,7 +36,8 @@ logging_udp_batch_size: 32
 # Queue configuration for the files outputs for the server
 logging_server_queue_type: LinkedList
 logging_server_queue_size: 50000
-logging_server_threads: "{{ logging_udp_threads | int + logging_tcp_threads | int }}"
+logging_server_threads: "{{ logging_udp_threads | int + logging_tcp_threads | int\
+  \ }}"
 
 # Mark message periodically by immark, if set to true.
 logging_mark: false

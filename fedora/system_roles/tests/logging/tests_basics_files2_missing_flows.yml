@@ -7,13 +7,15 @@
 # 0. Run logging role.
 # 1. An exception is to be captured and check the expected error message was returned or not.
 #
-- name: Ensure that the role runs with parameters from imjournal to four omfile outputs
+- name: Ensure that the role runs with parameters from imjournal to four omfile
+    outputs
   hosts: all
   become: true
   vars:
     __test_files_conf: /etc/rsyslog.d/30-output-files-files_output1.conf
     __default_system_log: /var/log/messages
-    __expected_error: "Error: ['bogus_basic_input'] includes undefined logging_inputs item."
+    __expected_error: "Error: ['bogus_basic_input'] includes undefined logging_inputs\
+      \ item."
 
   tasks:
     - block:

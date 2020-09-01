@@ -9,7 +9,7 @@
       vars:
         selinux_booleans_purge: true
         selinux_booleans:
-          - { name: 'samba_enable_home_dirs', state: 'on', persistent: 'yes' }
+          - {name: 'samba_enable_home_dirs', state: 'on', persistent: 'yes'}
 
     - include: set_selinux_variables.yml
     - name: save state after initial changes and before other changes
@@ -26,7 +26,7 @@
       vars:
         selinux_booleans_purge: false
         selinux_booleans:
-          - { name: 'httpd_can_network_connect', state: 'on', persistent: 'yes' }
+          - {name: 'httpd_can_network_connect', state: 'on', persistent: 'yes'}
 
     - include: set_selinux_variables.yml
     - name: save state after other changes

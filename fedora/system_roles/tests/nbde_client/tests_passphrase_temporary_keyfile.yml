@@ -43,8 +43,8 @@
           assert:
             that:
               - nbde_client_encryption_key is not success
-              - nbde_client_encryption_key.stderr ==
-                "No key available with this passphrase."
+              - nbde_client_encryption_key.stderr == "No key available with this
+                passphrase."
 
         - name: Assert idempotency
           include_tasks: tasks/verify_idempotency.yml

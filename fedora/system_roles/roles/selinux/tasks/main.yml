@@ -24,16 +24,17 @@
     name:
       - policycoreutils-python-utils
     state: present
-  when: ansible_distribution == "Fedora" or
-    ( ansible_distribution_major_version > "7" and
-      ( ansible_distribution == "CentOS" or ansible_distribution == "RedHat" ))
+  when: ansible_distribution == "Fedora" or ( ansible_distribution_major_version
+    > "7" and ( ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+    ))
 
 - name: Set permanent SELinux state if enabled
   selinux:
     state: "{{ selinux_state | default(ansible_selinux.config_mode, true) }}"
     policy: "{{ selinux_policy | default(ansible_selinux.type, true) }}"
   register: selinux_mod_output_enabled
-  when: ansible_selinux.status == "enabled" and ( selinux_state or selinux_policy )
+  when: ansible_selinux.status == "enabled" and ( selinux_state or selinux_policy
+    )
 
 - name: Set permanent SELinux state if disabled
   selinux:
@@ -44,9 +45,9 @@
 
 - name: Set ansible facts if needed
   set_fact:
-    selinux_reboot_required: "{{ selinux_mod_output_enabled.reboot_required
-  if ( selinux_mod_output_enabled.reboot_required is defined ) else (
-  selinux_mod_output_disabled.reboot_required | default(false) ) }}"
+    selinux_reboot_required: "{{ selinux_mod_output_enabled.reboot_required if (\
+      \ selinux_mod_output_enabled.reboot_required is defined ) else ( selinux_mod_output_disabled.reboot_required\
+      \ | default(false) ) }}"
 
 - name: Fail if reboot is required
   fail:
@@ -96,7 +97,7 @@
     setype: "{{ item.setype }}"
     ftype: "{{ item.ftype | default('a') }}"
     state: "{{ item.state | default('present') }}"
-    # FIXME: selevel, seuser
+  # FIXME: selevel, seuser
   with_items: "{{ selinux_fcontexts }}"
 
 - name: Restore SELinux labels on filesystem tree
@@ -122,7 +123,7 @@
   with_items: "{{ selinux_ports }}"
 
 - name: Set linux user to SELinux user mapping
-  selogin:
+  fedora.system_roles.selogin:
     login: "{{ item.login }}"
     seuser: "{{ item.seuser }}"
     serange: "{{ item.serange | default('s0') }}"

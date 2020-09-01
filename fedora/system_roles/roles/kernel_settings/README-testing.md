@@ -26,7 +26,7 @@ run and debug unit tests.  However, you may need to create a `.env` file like
 this, in order for code navigation, auto-completion, and test discovery to
 work correctly:
 ```
-PYTHONPATH=/full/path/to/tuned:/full/path/to/linux-system-roles/kernel_settings/library
+PYTHONPATH=/full/path/to/tuned:/full/path/to/fedora.system_roles.kernel_settings/library
 ```
 
 ### Testing the module

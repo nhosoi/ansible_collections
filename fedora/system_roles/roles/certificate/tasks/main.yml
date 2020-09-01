@@ -4,10 +4,10 @@
   vars:
     ffparams:
       files:
-        - "{{ ansible_facts['distribution'] }}_\
-          {{ ansible_facts['distribution_version'] }}.yml"
-        - "{{ ansible_facts['distribution'] }}_\
-          {{ ansible_facts['distribution_major_version'] }}.yml"
+        - "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_version']\
+          \ }}.yml"
+        - "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version']\
+          \ }}.yml"
         - "{{ ansible_facts['distribution'] }}.yml"
         - "{{ ansible_facts['os_family'] }}.yml"
         - "default.yml"
@@ -94,9 +94,9 @@
         __certificate_provider_vars[__certificate_provider].config_dir
         is defined
 
-    # While most Linux system roles have a list of services
-    #   this role doesn't need it. In fact some providers
-    #   won't have any service at all.
+  # While most Linux system roles have a list of services
+  #   this role doesn't need it. In fact some providers
+  #   won't have any service at all.
     - name: Ensure provider service is running
       service:
         name: >-
@@ -106,11 +106,10 @@
       loop: "{{ __certificate_providers }}"
       loop_control:
         loop_var: __certificate_provider
-      when:
-        __certificate_provider_vars[__certificate_provider].service is defined
+      when: __certificate_provider_vars[__certificate_provider].service is defined
 
 - name: Ensure certificate requests
-  certificate_request:
+  fedora.system_roles.certificate_request:
     name: "{{ item.name | default(omit) }}"
     dns: "{{ item.dns | default(omit) }}"
     ip: "{{ item.ip | default(omit) }}"

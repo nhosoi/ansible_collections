@@ -1,4 +1,3 @@
-
 - name: Set a profile
   hosts: all
 
@@ -17,9 +16,11 @@
       register: active
 
     - set_fact:
-        active_profile: "{{ active.stdout_lines[0] | regex_replace('^.*\\: (.*)$', '\\1') }}"
+        active_profile: "{{ active.stdout_lines[0] | regex_replace('^.*\\: (.*)$',\
+          \ '\\1') }}"
 
     - assert:
-        # 'balanced' maps to 'default' on old versions of tuned
-        that: "{{ active_profile == ('balanced' if tuned_version.rc == 0 else 'default') }}"
+      # 'balanced' maps to 'default' on old versions of tuned
+        that: "{{ active_profile == ('balanced' if tuned_version.rc == 0 else 'default')\
+          \ }}"
 

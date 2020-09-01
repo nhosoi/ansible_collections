@@ -1,10 +1,10 @@
 # Test Elasticsearch config - local certs are copied to the target host with the specified path.
 #
 # Elasticsearch output has this policy:
-#   use_cert: If true, key/certificates are used to access Elasticsearch.
-#             Triplets {`ca_cert`, `cert`, private_key`} and/or {`ca_cert_src`,
-#             `cert_src`, `private_key_src`} should be configured. Default to true.
-# In this test case, both triplets and use_cert option are properly set.
+#   tls: If true, key/certificates are used to access Elasticsearch.
+#        Triplets {`ca_cert`, `cert`, private_key`} and/or {`ca_cert_src`,
+#        `cert_src`, `private_key_src`} should be configured. Default to true.
+# In this test case, both triplets and tls option are properly set.
 #
 # [Configuration]
 # files input (imfile) ->  elasticsearch output (omelasticsearch)
@@ -37,7 +37,8 @@
 # Note: This is a test for the elasticsearch certs/key.
 # The files input to the elasticsearch output is not supported.
 #
-- name: Elasticsearch config - local certs are copied to the target host with the specified path.
+- name: Elasticsearch config - local certs are copied to the target host with the
+    specified path.
   hosts: all
   become: true
   vars:
@@ -55,8 +56,7 @@
     - name: Generate fake key/certs files.
       copy:
         dest: "{{ item }}"
-        content:
-          This is a fake {{ item }}.
+        content: This is a fake {{ item }}.
       delegate_to: localhost
       loop:
         - "{{ __test_ca_cert }}"
@@ -92,9 +92,10 @@
 
     - include_tasks: set_rsyslog_variables.yml
 
-    # notify restart rsyslogd is executed at the end of this test task.
-    # thus we have to force to invoke handlers
-    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+  # notify restart rsyslogd is executed at the end of this test task.
+  # thus we have to force to invoke handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal
+        sync points
       meta: flush_handlers
 
     - name: Check rsyslog.conf size
@@ -122,7 +123,8 @@
         path: "{{ __test_key_target }}"
 
     - name: Check key/certs in {{ __test_outputfiles_conf }}
-      command: /bin/grep 'tls.{{ item.key }}="{{ item.value }}"' {{ __test_outputfiles_conf }}
+      command: /bin/grep 'tls.{{ item.key }}="{{ item.value }}"' {{ __test_outputfiles_conf
+        }}
       with_dict:
         - cacert: "{{ __test_ca_cert_target }}"
         - mycert: "{{ __test_cert_target }}"

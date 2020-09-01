@@ -18,11 +18,11 @@
     - fedora.system_roles.network
   tasks:
     - block:
-        # Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1832897
+      # Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1832897
         - package:
             name: dbus-tools
             state: present
-        # create test profile
+      # create test profile
         - include_role:
             name: fedora.system_roles.network
           vars:
@@ -36,8 +36,8 @@
                   auto6: false
         - include_tasks: tasks/assert_device_present.yml
         - include_tasks: tasks/assert_profile_present.yml
-        # Use internal module directly for speedup
-        - network_connections:
+      # Use internal module directly for speedup
+        - fedora.system_roles.network_connections:
             provider: nm
             connections:
               - name: "{{ interface }}"
@@ -49,11 +49,10 @@
           ignore_errors: true
           register: error_trigger
         - assert:
-            fail_msg: The module call did not fail. Therefore the test
-              condition was not triggered. This test needs to be adjusted or
-              dropped.
+            fail_msg: The module call did not fail. Therefore the test condition
+              was not triggered. This test needs to be adjusted or dropped.
             that: error_trigger.failed
-        # yamllint disable-line rule:line-length
+      # yamllint disable-line rule:line-length
         - command: busctl --system tree --list org.freedesktop.NetworkManager
           register: nm_dbus_objects
         - debug:
@@ -66,8 +65,8 @@
               nm_dbus_objects.stdout_lines
       always:
         - block:
-            # Use internal module directly for speedup
-            - network_connections:
+          # Use internal module directly for speedup
+            - fedora.system_roles.network_connections:
                 provider: nm
                 connections:
                   - name: "{{ interface }}"

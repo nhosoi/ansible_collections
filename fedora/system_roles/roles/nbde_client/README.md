@@ -75,7 +75,7 @@ Example Playbooks
           - http://server1.example.com
           - http://server2.example.com
   roles:
-    - linux-system-roles.nbde_client
+    - fedora.system_roles.nbde_client
 ```
 
 #### Example 2: remove binding from slot 2 in /dev/sda1
@@ -92,7 +92,7 @@ Example Playbooks
         state: absent
 
   roles:
-    - linux-system-roles.nbde_client
+    - fedora.system_roles.nbde_client
 ```
 
 

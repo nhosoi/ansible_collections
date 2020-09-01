@@ -1,5 +1,5 @@
 # SELinux
-[![Travis Build Status](https://travis-ci.org/linux-system-roles/selinux.svg?branch=master)](https://travis-ci.org/linux-system-roles/selinux)
+[![Travis Build Status](https://travis-ci.org/fedora.system_roles.selinux.svg?branch=master)](https://travis-ci.org/fedora.system_roles.selinux)
 
 ## Expected functionality
 
@@ -42,7 +42,7 @@ This role can be configured using variables as it is described below.
 vars:
   [ see below ]
 roles:
-  - role: linux-system-roles.selinux
+  - role: fedora.system_roles.selinux
     become: true
 ```
 

@@ -1,9 +1,11 @@
 # yamllint disable-line rule:line-length
-- name: Configure NTP with OS release non-default provider and then change it to the default provider
+- name: Configure NTP with OS release non-default provider and then change it to
+    the default provider
   hosts: all
   vars:
-    # yamllint disable-line rule:line-length
-    is_ntp_default: "ansible_distribution in ['RedHat', 'CentOS'] and ansible_distribution_version is version('7.0', '<')"
+  # yamllint disable-line rule:line-length
+    is_ntp_default: "ansible_distribution in ['RedHat', 'CentOS'] and ansible_distribution_version\
+      \ is version('7.0', '<')"
     both_avail: true
 
   tasks:
@@ -16,9 +18,9 @@
             - chrony
             - ntp
 
-        # meta doesn't pickup with_item in when conditional,
-        # following set_fact workarounds that
-        # see https://github.com/ansible/ansible/issues/35890
+      # meta doesn't pickup with_item in when conditional,
+      # following set_fact workarounds that
+      # see https://github.com/ansible/ansible/issues/35890
         - set_fact:
             both_avail: false
           when: item.failed
@@ -39,8 +41,8 @@
     - include_role:
         name: fedora.system_roles.timesync
       vars:
-        # ntp is the default choice for RedHat and CentOS
-        # version < 7.0 - reverse it
+      # ntp is the default choice for RedHat and CentOS
+      # version < 7.0 - reverse it
         timesync_ntp_provider: "{{ 'chrony' if is_ntp_default else 'ntp' }}"
 
     - block:

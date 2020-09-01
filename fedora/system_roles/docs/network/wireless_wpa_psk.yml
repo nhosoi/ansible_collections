@@ -8,8 +8,8 @@
         wireless:
           ssid: "My WPA2-PSK Network"
           key_mgmt: "wpa-psk"
-          # recommend vault encrypting the wireless password
-          # see https://docs.ansible.com/ansible/latest/user_guide/vault.html
+        # recommend vault encrypting the wireless password
+        # see https://docs.ansible.com/ansible/latest/user_guide/vault.html
           password: "p@55w0rD"
   roles:
     - fedora.system_roles.network

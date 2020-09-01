@@ -87,6 +87,5 @@
     - __kernel_settings_blcmdline_value | d()
     - __kernel_settings_register_verify_bl_cmdline is defined
     - __kernel_settings_register_verify_bl_cmdline.stdout is defined
-    - __kernel_settings_register_verify_bl_cmdline is failed or
-      __kernel_settings_register_verify_bl_cmdline.stdout !=
-      __kernel_settings_blcmdline_value
+    - __kernel_settings_register_verify_bl_cmdline is failed or __kernel_settings_register_verify_bl_cmdline.stdout
+      != __kernel_settings_blcmdline_value

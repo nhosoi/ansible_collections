@@ -35,10 +35,10 @@
     - __network_wireless_connections_defined
     - network_provider == "nm"
     - network_allow_restart
-    # ansible-lint wants this to be a handler, but this is not appropriate as
-    # NetworkManager must be restarted prior to the connections being created.
-    # see (https://docs.ansible.com/ansible-lint/rules/default_rules.html)
-    - __network_package_install.changed  # noqa 503
+  # ansible-lint wants this to be a handler, but this is not appropriate as
+  # NetworkManager must be restarted prior to the connections being created.
+  # see (https://docs.ansible.com/ansible-lint/rules/default_rules.html)
+    - __network_package_install.changed # noqa 503
 
 - name: Enable and start NetworkManager
   service:
@@ -78,7 +78,7 @@
     - network_provider == "initscripts"
 
 - name: Configure networking connection profiles
-  network_connections:
+  fedora.system_roles.network_connections:
     provider: "{{ network_provider | mandatory }}"
     ignore_errors: "{{ network_ignore_errors | default(omit) }}"
     force_state_change: "{{ network_force_state_change | default(omit) }}"

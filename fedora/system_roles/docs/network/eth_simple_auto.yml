@@ -4,9 +4,9 @@
   vars:
     network_connections:
 
-      # Create one ethernet profile and activate it.
-      # The profile uses automatic IP addressing
-      # and is tied to the interface by MAC address.
+    # Create one ethernet profile and activate it.
+    # The profile uses automatic IP addressing
+    # and is tied to the interface by MAC address.
       - name: prod1
         state: up
         type: ethernet

@@ -7,7 +7,7 @@
 - name: Check whether devices are at the desired state
   when:
     - nbde_client_bindings | default([])
-  nbde_client_clevis:
+  fedora.system_roles.nbde_client_clevis:
     bindings: "{{ nbde_client_bindings | default([]) }}"
   check_mode: yes
   register: __nbde_client_clevis_check_state
@@ -38,7 +38,7 @@
       when:
         - nbde_client_bindings | default([])
         - nbde_client_tempdir.path is defined
-      nbde_client_clevis:
+      fedora.system_roles.nbde_client_clevis:
         bindings: "{{ nbde_client_bindings | default([]) }}"
         data_dir: "{{ nbde_client_tempdir.path }}"
       notify: nbde_client update initramfs

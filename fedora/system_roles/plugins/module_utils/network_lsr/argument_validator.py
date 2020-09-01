@@ -6,7 +6,7 @@ import posixpath
 import socket
 
 # pylint: disable=import-error, no-name-in-module
-from ansible.module_utils.network_lsr import MyError
+from ansible_collections.fedora.system_roles.plugins.module_utils.network_lsr.__init__ import MyError
 from ansible_collections.fedora.system_roles.plugins.module_utils.network_lsr.utils import Util
 
 

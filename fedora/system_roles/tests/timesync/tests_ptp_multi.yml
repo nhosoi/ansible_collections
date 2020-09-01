@@ -40,8 +40,9 @@
                   - "'PTP1' in sources.stdout"
 
             - name: Run pmc
-              # yamllint disable-line rule:line-length
-              command: pmc -u -b 0 -d 0 -s /var/run/timemaster/ptp4l.0.socket 'GET DOMAIN'
+            # yamllint disable-line rule:line-length
+              command: pmc -u -b 0 -d 0 -s /var/run/timemaster/ptp4l.0.socket 'GET
+                DOMAIN'
               register: pmc
 
             - name: Check PTP domain
@@ -50,8 +51,9 @@
                   - "'domainNumber 0' in pmc.stdout"
 
             - name: Run pmc
-              # yamllint disable-line rule:line-length
-              command: pmc -u -b 0 -d 1 -s /var/run/timemaster/ptp4l.1.socket 'GET DOMAIN'
+            # yamllint disable-line rule:line-length
+              command: pmc -u -b 0 -d 1 -s /var/run/timemaster/ptp4l.1.socket 'GET
+                DOMAIN'
               register: pmc
 
             - name: Check PTP domain

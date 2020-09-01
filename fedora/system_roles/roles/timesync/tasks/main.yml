@@ -4,10 +4,10 @@
   vars:
     ffparams:
       files:
-        - "{{ ansible_facts['distribution'] }}_\
-          {{ ansible_facts['distribution_version'] }}.yml"
-        - "{{ ansible_facts['distribution'] }}_\
-          {{ ansible_facts['distribution_major_version'] }}.yml"
+        - "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_version']\
+          \ }}.yml"
+        - "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version']\
+          \ }}.yml"
         - "{{ ansible_facts['distribution'] }}.yml"
         - "{{ ansible_facts['os_family'] }}.yml"
         - "default.yml"
@@ -19,8 +19,8 @@
   vars:
     __timesync_ff_params:
       files:
-        - "{{ ansible_facts['distribution'] ~ '_' ~
-              ansible_facts['distribution_major_version'] }}.yml"
+        - "{{ ansible_facts['distribution'] ~ '_' ~ ansible_facts['distribution_major_version']\
+          \ }}.yml"
         - "default.yml"
       paths:
         - "{{ role_path }}/tasks/setup"
@@ -50,16 +50,15 @@
   when: timesync_mode is not defined
 
 - name: Determine current NTP provider
-  timesync_provider:
+  fedora.system_roles.timesync_provider:
   when:
     - timesync_mode != 2
     - timesync_ntp_provider == ''
 
 - name: Select NTP provider
   set_fact:
-    timesync_ntp_provider: "{{
-        timesync_ntp_provider_current|
-        default(timesync_ntp_provider_os_default, true) }}"
+    timesync_ntp_provider: "{{ timesync_ntp_provider_current| default(timesync_ntp_provider_os_default,\
+      \ true) }}"
   when:
     - timesync_mode != 2
     - timesync_ntp_provider == ''

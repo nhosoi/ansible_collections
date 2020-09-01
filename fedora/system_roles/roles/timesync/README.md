@@ -1,6 +1,6 @@
 timesync
 ========
-[![Travis Build Status](https://travis-ci.org/linux-system-roles/timesync.svg?branch=master)](https://travis-ci.org/linux-system-roles/timesync)
+[![Travis Build Status](https://travis-ci.org/fedora.system_roles.timesync.svg?branch=master)](https://travis-ci.org/fedora.system_roles.timesync)
 
 This role installs and configures an NTP and/or PTP implementation to operate
 as an NTP client and/or PTP slave in order to synchronize the system clock with
@@ -82,7 +82,7 @@ Install and configure ntp to synchronize the system clock with three NTP servers
       - hostname: baz.example.com
         iburst: yes
   roles:
-    - linux-system-roles.timesync
+    - fedora.system_roles.timesync
 ```
 
 Install and configure linuxptp to synchronize the system clock with a
@@ -95,7 +95,7 @@ grandmaster in PTP domain number 0, which is accessible on interface eth0:
       - number: 0
         interfaces: [ eth0 ]
   roles:
-    - linux-system-roles.timesync
+    - fedora.system_roles.timesync
 ```
 
 Install and configure chrony and linuxptp to synchronize the system clock with
@@ -122,5 +122,5 @@ synchronization:
         transport: UDPv4
         delay: 0.000010
   roles:
-    - linux-system-roles.timesync
+    - fedora.system_roles.timesync
 ```

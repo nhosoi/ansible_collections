@@ -3,13 +3,13 @@
 ## Where to start
 
 - **Bugs and needed implementations** are listed on [Github
-  Issues](https://github.com/linux-system-roles/network/issues). Issues labeled with
+  Issues](https://github.com/fedora.system_roles.network/issues). Issues labeled with
 [**help
-wanted**](https://github.com/linux-system-roles/network/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+wanted**](https://github.com/fedora.system_roles.network/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
 are likely to be suitable for new contributors!
 
 - **Code** is managed on
-  [Github](https://github.com/linux-system-roles/network), using [Pull
+  [Github](https://github.com/fedora.system_roles.network), using [Pull
 Requests](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
 - The code needs to be **compatible with Python 2.6, 2.7, 3.6, 3.7 and 3.8**.

@@ -1,10 +1,10 @@
 # Test Elasticsearch config - local certs are copied to the target host with the default configuration path.
 #
 # Elasticsearch output has this policy:
-#   use_cert: If true, key/certificates are used to access Elasticsearch.
-#             Triplets {`ca_cert`, `cert`, private_key`} and/or {`ca_cert_src`,
-#             `cert_src`, `private_key_src`} should be configured. Default to true.
-# In this test case, src certs triplet and implicit use_cert option are properly set.
+#   tls: If true, key/certificates are used to access Elasticsearch.
+#        Triplets {`ca_cert`, `cert`, private_key`} and/or {`ca_cert_src`,
+#        `cert_src`, `private_key_src`} should be configured. Default to true.
+# In this test case, src certs triplet and implicit tls option are properly set.
 #
 # [Configuration]
 # files input (imfile) ->  elasticsearch output (omelasticsearch)
@@ -34,7 +34,8 @@
 # Note: This is a test for the elasticsearch certs/key.
 # The files input to the elasticsearch output is not supported.
 #
-- name: Ensure that the role runs with parameters from imfile to two elasticsearch outputs
+- name: Ensure that the role runs with parameters from imfile to two elasticsearch
+    outputs
   hosts: all
   become: true
   vars:
@@ -44,13 +45,13 @@
     __test_ca_cert: /tmp/es-ca.crt
     __test_cert: /tmp/es-cert.pem
     __test_key: /tmp/es-key.pem
+    __test_el: elasticsearch_output
 
   tasks:
     - name: Generate fake key/certs files.
       copy:
         dest: "{{ item }}"
-        content:
-          This is a fake {{ item }}.
+        content: This is a fake {{ item }}.
       delegate_to: localhost
       loop:
         - "{{ __test_ca_cert }}"
@@ -60,13 +61,13 @@
     - name: deploy config to send to elasticsearch
       vars:
         logging_outputs:
-          - name: elasticsearch_output
+          - name: "{{ __test_el }}"
             type: elasticsearch
             server_host: logging-es
             server_port: 9200
             index_prefix: project.
             input_type: ovirt
-            retryfailures: false
+            retryfailures: on
             ca_cert_src: "{{ __test_ca_cert }}"
             cert_src: "{{ __test_cert }}"
             private_key_src: "{{ __test_key }}"
@@ -77,15 +78,16 @@
         logging_flows:
           - name: flow_0
             inputs: [files_input]
-            outputs: [elasticsearch_output, elasticsearch_output_ops]
+            outputs: "[{{ __test_el }}]"
       include_role:
         name: fedora.system_roles.logging
 
     - include_tasks: set_rsyslog_variables.yml
 
-    # notify restart rsyslogd is executed at the end of this test task.
-    # thus we have to force to invoke handlers
-    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+  # notify restart rsyslogd is executed at the end of this test task.
+  # thus we have to force to invoke handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal
+        sync points
       meta: flush_handlers
 
     - name: Check rsyslog.conf size
@@ -113,9 +115,20 @@
         path: "/etc/rsyslog.d/{{ __test_key | basename }}"
 
     - name: Check key/certs in {{ __test_outputfiles_conf }}
-      command: /bin/grep 'tls.{{ item.key }}="\/etc\/rsyslog.d\/{{ item.value | basename }}"' {{ __test_outputfiles_conf }}
+      command: /bin/grep 'tls.{{ item.key }}="\/etc\/rsyslog.d\/{{ item.value |
+        basename }}"' {{ __test_outputfiles_conf }}
       with_dict:
         - cacert: "{{ __test_ca_cert }}"
         - mycert: "{{ __test_cert }}"
         - myprivkey: "{{ __test_key }}"
       changed_when: false
+
+    - name: Check retryfailures in {{ __test_outputfiles_conf }}
+      command: /bin/grep 'retryfailures="on"' {{ __test_outputfiles_conf }}
+      changed_when: false
+
+    - name: Check retryruleset in {{ __test_outputfiles_conf }}
+      command: /bin/grep 'retryruleset="{{ __test_el }}"' {{ __test_outputfiles_conf
+        }}
+      changed_when: false
+

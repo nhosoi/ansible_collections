@@ -9,10 +9,10 @@
     invalid_size1: 'xyz GiB'
     invalid_size2: 'none'
     unused_disk_subfact: '{{ ansible_devices[unused_disks[0]] }}'
-    too_large_size: '{{ (unused_disk_subfact.sectors|int + 1) *
-                        unused_disk_subfact.sectorsize|int }}'
-    disk_size: '{{ unused_disk_subfact.sectors|int *
-                   unused_disk_subfact.sectorsize|int }}'
+    too_large_size: '{{ (unused_disk_subfact.sectors|int + 1) * unused_disk_subfact.sectorsize|int
+      }}'
+    disk_size: '{{ unused_disk_subfact.sectors|int * unused_disk_subfact.sectorsize|int
+      }}'
 
   tasks:
     - include_role:
@@ -23,22 +23,23 @@
         min_size: "{{ volume_group_size }}"
         max_return: 1
 
-    # For ext4 FS
+  # For ext4 FS
 
-    - name: Create one LVM logical volume with "{{ volume_size_before }}" under one volume group
+    - name: Create one LVM logical volume with "{{ volume_size_before }}" under
+        one volume group
       include_role:
         name: fedora.system_roles.storage
       vars:
-          storage_pools:
-            - name: foo
-              disks: "{{ unused_disks }}"
-              type: lvm
-              volumes:
-                - name: test1
-                  # resizing is currently supported only for ext2/3/4
-                  fs_type: 'ext4'
-                  size: "{{ volume_size_before }}"
-                  mount_point: "{{ mount_location }}"
+        storage_pools:
+          - name: foo
+            disks: "{{ unused_disks }}"
+            type: lvm
+            volumes:
+              - name: test1
+                # resizing is currently supported only for ext2/3/4
+                fs_type: 'ext4'
+                size: "{{ volume_size_before }}"
+                mount_point: "{{ mount_location }}"
 
     - include_tasks: verify-role-results.yml
 
@@ -46,15 +47,15 @@
       include_role:
         name: fedora.system_roles.storage
       vars:
-          storage_pools:
-            - name: foo
-              type: lvm
-              disks: "{{ unused_disks }}"
-              volumes:
-                - name: test1
-                  fs_type: 'ext4'
-                  size: "{{ volume_size_after }}"
-                  mount_point: "{{ mount_location }}"
+        storage_pools:
+          - name: foo
+            type: lvm
+            disks: "{{ unused_disks }}"
+            volumes:
+              - name: test1
+                fs_type: 'ext4'
+                size: "{{ volume_size_after }}"
+                mount_point: "{{ mount_location }}"
 
     - include_tasks: verify-role-results.yml
 
@@ -76,7 +77,8 @@
 
     - name: Test for correct handling of too-large volume size
       block:
-        - name: Try to create LVM with a too-large volume size, resize to "{{ too_large_size }}"
+        - name: Try to create LVM with a too-large volume size, resize to "{{ too_large_size
+            }}"
           include_role:
             name: fedora.system_roles.storage
           vars:
@@ -102,14 +104,14 @@
 
         - name: Verify the output
           assert:
-            that: "blivet_output.failed and
-                   blivet_output.msg|regex_search('volume.+cannot be resized to.+') and
-                   not blivet_output.changed"
+            that: "blivet_output.failed and blivet_output.msg|regex_search('volume.+cannot\
+              \ be resized to.+') and not blivet_output.changed"
             msg: "Unexpected behavior w/ invalid volume size"
 
     - name: Test for correct handling of volume size equal disk's size
       block:
-        - name: Try to create LVM with volume size equal disk's size, resize to "{{ disk_size }}"
+        - name: Try to create LVM with volume size equal disk's size, resize to
+            "{{ disk_size }}"
           include_role:
             name: fedora.system_roles.storage
           vars:
@@ -135,14 +137,14 @@
 
         - name: Verify the output
           assert:
-            that: "blivet_output.failed and
-                   blivet_output.msg|regex_search('volume.+cannot be resized to.+') and
-                   not blivet_output.changed"
+            that: "blivet_output.failed and blivet_output.msg|regex_search('volume.+cannot\
+              \ be resized to.+') and not blivet_output.changed"
             msg: "Unexpected behavior w/ invalid volume size"
 
     - name: Test for correct handling of invalid size specification
       block:
-        - name: Try to create LVM with an invalid size specification, resize to "{{ invalid_size1 }}"
+        - name: Try to create LVM with an invalid size specification, resize to
+            "{{ invalid_size1 }}"
           include_role:
             name: fedora.system_roles.storage
           vars:
@@ -168,14 +170,14 @@
 
         - name: Verify the output
           assert:
-            that: "blivet_output.failed and
-                   blivet_output.msg|regex_search('invalid size.+for volume') and
-                   not blivet_output.changed"
+            that: "blivet_output.failed and blivet_output.msg|regex_search('invalid\
+              \ size.+for volume') and not blivet_output.changed"
             msg: "Unexpected behavior w/ invalid volume size"
 
     - name: Test for correct handling of invalid size specification
       block:
-        - name: Try to create LVM with an invalid size specification, resize to "{{ invalid_size2 }}"
+        - name: Try to create LVM with an invalid size specification, resize to
+            "{{ invalid_size2 }}"
           include_role:
             name: fedora.system_roles.storage
           vars:
@@ -201,29 +203,29 @@
 
         - name: Verify the output
           assert:
-            that: "blivet_output.failed and
-                   blivet_output.msg|regex_search('invalid size.+for volume') and
-                   not blivet_output.changed"
+            that: "blivet_output.failed and blivet_output.msg|regex_search('invalid\
+              \ size.+for volume') and not blivet_output.changed"
             msg: "Unexpected behavior w/ invalid volume size"
 
     - name: Clean up
       include_role:
         name: fedora.system_roles.storage
       vars:
-          storage_pools:
-            - name: foo
-              disks: "{{ unused_disks }}"
-              state: absent
-              volumes:
-                - name: test1
-                  size: "{{ volume_size_before }}"
-                  mount_point: "{{ mount_location }}"
+        storage_pools:
+          - name: foo
+            disks: "{{ unused_disks }}"
+            state: absent
+            volumes:
+              - name: test1
+                size: "{{ volume_size_before }}"
+                mount_point: "{{ mount_location }}"
 
     - include_tasks: verify-role-results.yml
 
-    # For ext3 FS
+  # For ext3 FS
 
-    - name: Create a LVM logical volume with "{{ volume_size_before }}" for ext3 FS
+    - name: Create a LVM logical volume with "{{ volume_size_before }}" for ext3
+        FS
       include_role:
         name: fedora.system_roles.storage
       vars:
@@ -275,20 +277,21 @@
       include_role:
         name: fedora.system_roles.storage
       vars:
-          storage_pools:
-            - name: foo
-              disks: "{{ unused_disks }}"
-              state: absent
-              volumes:
-                - name: test1
-                  size: "{{ volume_size_before }}"
-                  mount_point: "{{ mount_location }}"
+        storage_pools:
+          - name: foo
+            disks: "{{ unused_disks }}"
+            state: absent
+            volumes:
+              - name: test1
+                size: "{{ volume_size_before }}"
+                mount_point: "{{ mount_location }}"
 
     - include_tasks: verify-role-results.yml
 
-    # For ext2 FS
+  # For ext2 FS
 
-    - name: Create a LVM logical volume with "{{ volume_size_before }}" for ext2 FS
+    - name: Create a LVM logical volume with "{{ volume_size_before }}" for ext2
+        FS
       include_role:
         name: fedora.system_roles.storage
       vars:
@@ -340,13 +343,13 @@
       include_role:
         name: fedora.system_roles.storage
       vars:
-          storage_pools:
-            - name: foo
-              disks: "{{ unused_disks }}"
-              state: absent
-              volumes:
-                - name: test1
-                  size: "{{ volume_size_before }}"
-                  mount_point: "{{ mount_location }}"
+        storage_pools:
+          - name: foo
+            disks: "{{ unused_disks }}"
+            state: absent
+            volumes:
+              - name: test1
+                size: "{{ volume_size_before }}"
+                mount_point: "{{ mount_location }}"
 
     - include_tasks: verify-role-results.yml

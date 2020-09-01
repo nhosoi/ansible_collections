@@ -1,6 +1,6 @@
 ---
 - name: Set variable with services List for RedHat 7 and above systems
-  command: systemctl list-unit-files --no-legend *.service  # noqa 303
+  command: systemctl list-unit-files --no-legend *.service # noqa 303
   register: __timesync_register_services
   check_mode: no
   changed_when: false

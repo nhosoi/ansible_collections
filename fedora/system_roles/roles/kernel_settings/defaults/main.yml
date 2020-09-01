@@ -27,16 +27,16 @@ kernel_settings_sysfs: []
 
 # A space delimited list of cpu numbers.
 # See systemd-system.conf man page - CPUAffinity
-kernel_settings_systemd_cpu_affinity: null
+kernel_settings_systemd_cpu_affinity:
 
 # One of the following values: `always` `madvise` `never`. This is the memory
 # subsystem transparent hugepages value.
-kernel_settings_transparent_hugepages: null
+kernel_settings_transparent_hugepages:
 
 # One of these values: `always` `defer` `defer+madvise` `madvise` `never`.
 # This is the memory subsystem transparent hugepages fragmentation handling
 # value.  The actual supported values may be different depending on your OS.
-kernel_settings_transparent_hugepages_defrag: null
+kernel_settings_transparent_hugepages_defrag:
 
 # If purge is true, completely wipe out whatever the current settings
 # are and replace them with kernel_settings_parameters

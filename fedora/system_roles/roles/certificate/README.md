@@ -17,7 +17,7 @@ Basic usage:
         ca: self-sign
 
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 On a RPM-based system this will place the certificate in `/etc/pki/tls/certs/mycert.crt`
@@ -193,7 +193,7 @@ directory for the distribution.
         ca: self-sign
 
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 You can find the directories for each distribution in the following locations:
@@ -223,7 +223,7 @@ The example below creates a certificate file in
         ca: self-sign
 
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 ### Issuing certificates with multiple DNS, IP and Email
@@ -249,7 +249,7 @@ The example below creates a certificate file in
         ca: self-sign
 
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 
@@ -271,7 +271,7 @@ The example below creates a certificate file in
         organizational_unit: platform
         email: admin@example.com
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 
@@ -287,7 +287,7 @@ The example below creates a certificate file in
         ca: self-sign
         key_size: 4096
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 
@@ -310,7 +310,7 @@ The example below creates a certificate file in
           - id-kp-clientAuth
           - id-kp-serverAuth
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 
@@ -333,7 +333,7 @@ set to `no` the role does not wait for any certificate to be issued.
         dns: www.example.com
         ca: self-sign
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 
@@ -350,7 +350,7 @@ set to `no` the role does not wait for any certificate to be issued.
         principal: HTTP/www.example.com@EXAMPLE.COM
 
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 
@@ -370,7 +370,7 @@ auto-renewal. To disable that behavior set `auto_renew: no`.
         auto_renew: no
 
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 
@@ -390,7 +390,7 @@ to use it's CA to issue your certificate. To do that, set `ca: ipa`.
         ca: ipa
 
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 ### Running a command before or after a certificate is issued
@@ -412,7 +412,7 @@ and `run_after`.
         run_after: systemctl start webserver.service
 
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 ### Setting the certificate owner and group
@@ -435,7 +435,7 @@ set to httpd.
         group: httpd
 
   roles:
-    - linux-system-roles.certificate
+    - fedora.system_roles.certificate
 ```
 
 Note that you can also use UID and GID instead of user and group names.

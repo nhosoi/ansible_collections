@@ -4,10 +4,10 @@
   vars:
     ffparams:
       files:
-        - "{{ ansible_facts['distribution'] }}_\
-          {{ ansible_facts['distribution_version'] }}.yml"
-        - "{{ ansible_facts['distribution'] }}_\
-          {{ ansible_facts['distribution_major_version'] }}.yml"
+        - "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_version']\
+          \ }}.yml"
+        - "{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version']\
+          \ }}.yml"
         - "{{ ansible_facts['distribution'] }}.yml"
         - "{{ ansible_facts['os_family'] }}.yml"
         - "default.yml"
@@ -40,51 +40,40 @@
     mode: 0644
 
 - name: Apply kernel settings
-  kernel_settings:
+  fedora.system_roles.kernel_settings:
     sysctl: "{{ kernel_settings_sysctl if kernel_settings_sysctl else omit }}"
     sysfs: "{{ kernel_settings_sysfs if kernel_settings_sysfs else omit }}"
     systemd:
-      - name: "{{ 'cpu_affinity' if kernel_settings_systemd_cpu_affinity
-                  else none }}"
-        value: "{{ kernel_settings_systemd_cpu_affinity
-                   if kernel_settings_systemd_cpu_affinity !=
-                   __kernel_settings_state_absent
-                   else none }}"
-        state: "{{ 'absent' if kernel_settings_systemd_cpu_affinity ==
-                   __kernel_settings_state_absent else none }}"
+      - name: "{{ 'cpu_affinity' if kernel_settings_systemd_cpu_affinity else none\
+          \ }}"
+        value: "{{ kernel_settings_systemd_cpu_affinity if kernel_settings_systemd_cpu_affinity\
+          \ != __kernel_settings_state_absent else none }}"
+        state: "{{ 'absent' if kernel_settings_systemd_cpu_affinity == __kernel_settings_state_absent\
+          \ else none }}"
     vm:
-      - name: "{{ 'transparent_hugepages'
-                  if kernel_settings_transparent_hugepages
-                  else none }}"
-        value: "{{ kernel_settings_transparent_hugepages
-                   if kernel_settings_transparent_hugepages !=
-                   __kernel_settings_state_absent else none }}"
-        state: "{{ 'absent' if kernel_settings_transparent_hugepages ==
-                   __kernel_settings_state_absent else none }}"
-      - name: "{{ 'transparent_hugepage.defrag'
-                  if kernel_settings_transparent_hugepages_defrag
-                  else none }}"
-        value: "{{ kernel_settings_transparent_hugepages_defrag
-                   if kernel_settings_transparent_hugepages_defrag !=
-                   __kernel_settings_state_absent else none }}"
-        state: "{{ 'absent' if kernel_settings_transparent_hugepages_defrag ==
-                   __kernel_settings_state_absent else none }}"
+      - name: "{{ 'transparent_hugepages' if kernel_settings_transparent_hugepages\
+          \ else none }}"
+        value: "{{ kernel_settings_transparent_hugepages if kernel_settings_transparent_hugepages\
+          \ != __kernel_settings_state_absent else none }}"
+        state: "{{ 'absent' if kernel_settings_transparent_hugepages == __kernel_settings_state_absent\
+          \ else none }}"
+      - name: "{{ 'transparent_hugepage.defrag' if kernel_settings_transparent_hugepages_defrag\
+          \ else none }}"
+        value: "{{ kernel_settings_transparent_hugepages_defrag if kernel_settings_transparent_hugepages_defrag\
+          \ != __kernel_settings_state_absent else none }}"
+        state: "{{ 'absent' if kernel_settings_transparent_hugepages_defrag == __kernel_settings_state_absent\
+          \ else none }}"
     bootloader:
-      - name: "{{ 'cmdline'
-                  if kernel_settings_bootloader_cmdline | d({})
-                  else none }}"
-        value: "{{ kernel_settings_bootloader_cmdline |
-                   d([]) }}"
+      - name: "{{ 'cmdline' if kernel_settings_bootloader_cmdline | d({}) else none\
+          \ }}"
+        value: "{{ kernel_settings_bootloader_cmdline | d([]) }}"
     purge: "{{ kernel_settings_purge }}"
   notify: __kernel_settings_handler_modified
   register: __kernel_settings_register_module
   when:
-    - kernel_settings_sysctl or kernel_settings_sysfs
-      or kernel_settings_systemd_cpu_affinity
-      or kernel_settings_transparent_hugepages
-      or kernel_settings_transparent_hugepages_defrag
-      or kernel_settings_bootloader_cmdline | d({})
-      or kernel_settings_purge
+    - kernel_settings_sysctl or kernel_settings_sysfs or kernel_settings_systemd_cpu_affinity
+      or kernel_settings_transparent_hugepages or kernel_settings_transparent_hugepages_defrag
+      or kernel_settings_bootloader_cmdline | d({}) or kernel_settings_purge
 
 - name: tuned apply settings
   command: >

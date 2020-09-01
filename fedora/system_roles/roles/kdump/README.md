@@ -1,6 +1,6 @@
 
 # Ansible Role: Kernel Crash Dump
-[![Travis Build Status](https://travis-ci.org/linux-system-roles/kdump.svg?branch=master)](https://travis-ci.org/linux-system-roles/kdump)
+[![Travis Build Status](https://travis-ci.org/fedora.system_roles.kdump.svg?branch=master)](https://travis-ci.org/fedora.system_roles.kdump)
 
 An ansible role which configures kdump.
 

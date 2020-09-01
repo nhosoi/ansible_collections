@@ -64,7 +64,7 @@ import os
 import re
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.fedora.system_roles.plugins.module_utils.storage.size import Size
+from ansible.module_utils.size import Size
 
 
 SYS_CLASS_BLOCK = "/sys/class/block/"

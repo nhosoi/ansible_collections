@@ -43,7 +43,8 @@
 
     - name: Check whether the keys were properly fetched
       stat:
-        path: "{{ nbde_server_keys_dir }}/{{ inventory_hostname }}/{{ item.path | basename }}"  # yamllint disable-line rule:line-length
+        path: "{{ nbde_server_keys_dir }}/{{ inventory_hostname }}/{{ item.path\
+          \ | basename }}"                                                                    # yamllint disable-line rule:line-length
       loop: "{{ nbde_server_host_keys.files }}"
       delegate_to: localhost
       register: nbde_server_local_keys

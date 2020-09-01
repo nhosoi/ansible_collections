@@ -14,8 +14,8 @@ import traceback
 
 # pylint: disable=import-error, no-name-in-module
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.network_lsr import ethtool
-from ansible.module_utils.network_lsr import MyError
+from ansible_collections.fedora.system_roles.plugins.module_utils.network_lsr import ethtool
+from ansible_collections.fedora.system_roles.plugins.module_utils.network_lsr.__init__ import MyError
 
 from ansible_collections.fedora.system_roles.plugins.module_utils.network_lsr.argument_validator import (
     ArgUtil,
@@ -24,7 +24,7 @@ from ansible_collections.fedora.system_roles.plugins.module_utils.network_lsr.ar
 )
 
 from ansible_collections.fedora.system_roles.plugins.module_utils.network_lsr.utils import Util
-from ansible.module_utils.network_lsr import nm_provider
+from ansible_collections.fedora.system_roles.plugins.module_utils.network_lsr import nm_provider
 
 # pylint: enable=import-error, no-name-in-module
 

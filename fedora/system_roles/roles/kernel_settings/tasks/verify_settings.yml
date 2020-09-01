@@ -23,8 +23,8 @@
 
 - name: report errors that are not bootloader errors
   fail:
-    msg: "{{ 'Failed to verify kernel_settings: ' ~
-              __kernel_settings_register_verify_log.stdout }}"
+    msg: "{{ 'Failed to verify kernel_settings: ' ~ __kernel_settings_register_verify_log.stdout\
+      \ }}"
   when:
     - __kernel_settings_register_verify_values is failed
     - __kernel_settings_register_verify_log is defined

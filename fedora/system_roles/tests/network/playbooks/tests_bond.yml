@@ -27,7 +27,7 @@
             name: fedora.system_roles.network
           vars:
             network_connections:
-              # Create a bond master
+            # Create a bond master
               - name: "{{ master_profile }}"
                 state: up
                 type: bond
@@ -35,13 +35,13 @@
                 bond:
                   mode: active-backup
                   miimon: 110
-              # add an ethernet to the bond
+            # add an ethernet to the bond
               - name: "{{ slave1_profile }}"
                 state: up
                 type: ethernet
                 interface_name: "{{ dhcp_interface1 }}"
                 master: "{{ master_profile }}"
-              # add a second ethernet to the bond
+            # add a second ethernet to the bond
               - name: "{{ slave2_profile }}"
                 state: up
                 type: ethernet

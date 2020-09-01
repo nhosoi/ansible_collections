@@ -1,6 +1,6 @@
 ---
 - name: Set variable with services List for RedHat 6
-  command: chkconfig --list  # noqa 303
+  command: chkconfig --list # noqa 303
   register: __timesync_register_services
   check_mode: no
   changed_when: false

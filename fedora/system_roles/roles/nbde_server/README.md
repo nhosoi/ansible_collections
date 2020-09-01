@@ -58,7 +58,7 @@ Example Playbooks
 - hosts: all
 
   roles:
-    - linux-system-roles.nbde_server
+    - fedora.system_roles.nbde_server
 ```
 
 #### Example 2: lift the keys from every NBDE server install in `/root/nbde_server/keys`
@@ -71,7 +71,7 @@ Example Playbooks
     nbde_server_keys_dir: /root/nbde_server/keys
 
   roles:
-    - linux-system-roles.nbde_server
+    - fedora.system_roles.nbde_server
 ```
 
 After this, you can backup your keys, which will be placed in `/root/nbde_server/keys`, within subdirectories named after the host they belong to.
@@ -89,7 +89,7 @@ To redeploy keys, they must be placed into subdirectories named after the host t
     nbde_server_keys_dir: /root/nbde_server/keys
 
   roles:
-    - linux-system-roles.nbde_server
+    - fedora.system_roles.nbde_server
 ```
 
 #### Example 4: deploy an NBDE server and use the same keys in every host
@@ -104,7 +104,7 @@ To redeploy keys, they must be placed into subdirectories named after the host t
     nbde_server_keys_dir: /root/nbde_server/keys
 
   roles:
-    - linux-system-roles.nbde_server
+    - fedora.system_roles.nbde_server
 ```
 
 License

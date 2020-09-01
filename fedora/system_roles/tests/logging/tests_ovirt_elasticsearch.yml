@@ -26,7 +26,8 @@
 # 5.5  Check input file is {{ __test_vdsm_input }} in {{ __test_ovirt_vdsm_conf }}
 # 5.6  Check index_prefix is {{ __test_logs_index }} in {{ __test_ovirt_vdsm_conf }}
 #
-- name: Ensure that the role runs with parameters from ovirt to two elasticsearch outputs and local files output
+- name: Ensure that the role runs with parameters from ovirt to two elasticsearch
+    outputs and local files output
   hosts: all
   become: true
   vars:
@@ -87,7 +88,8 @@
             subtype: bogus
         logging_flows:
           - name: flow_0
-            inputs: ["{{ __test_collectd_name }}", "{{ __test_engine_name }}", "{{ __test_vdsm_name }}"]
+            inputs: ["{{ __test_collectd_name }}", "{{ __test_engine_name }}", "{{\
+                  \ __test_vdsm_name }}"]
             outputs: [elasticsearch_output, elasticsearch_output_ops]
           - name: flow_1
             inputs: [basic_input]
@@ -97,9 +99,10 @@
 
     - include_tasks: set_rsyslog_variables.yml
 
-    # notify restart rsyslogd is executed at the end of this test task.
-    # thus we have to force to invoke handlers
-    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+  # notify restart rsyslogd is executed at the end of this test task.
+  # thus we have to force to invoke handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal
+        sync points
       meta: flush_handlers
 
     - name: Check rsyslog.conf size
@@ -110,7 +113,8 @@
       assert:
         that: rsyslog_d_file_count.matched == 17
 
-    - name: Check "{{ __test_ovirt_collectd_conf }}, {{ __test_ovirt_engine_conf }}, {{ __test_ovirt_vdsm_conf }}"
+    - name: Check "{{ __test_ovirt_collectd_conf }}, {{ __test_ovirt_engine_conf
+        }}, {{ __test_ovirt_vdsm_conf }}"
       stat:
         path: "{{ item }}"
       register: __result
@@ -127,25 +131,36 @@
       failed_when: __result.stat.exists
 
     - name: Check ovirt_collectd_port is "{{ __test_collectd_port }}"
-      command: /bin/grep 'input (name="{{ __test_collectd_name }}" type="imtcp" port="{{ __test_collectd_port }}"' {{ __test_ovirt_collectd_conf }}
+      command: /bin/grep 'input (name="{{ __test_collectd_name }}" type="imtcp"
+        port="{{ __test_collectd_port }}"' {{ __test_ovirt_collectd_conf }}
       changed_when: false
 
-    - name: Check index_prefix is "{{ __test_metrics_index }}" in "{{ __test_ovirt_collectd_conf }}"
-      command: /bin/grep 'set $.index_prefix = "{{ __test_metrics_index }}"' {{ __test_ovirt_collectd_conf }}
+    - name: Check index_prefix is "{{ __test_metrics_index }}" in "{{ __test_ovirt_collectd_conf
+        }}"
+      command: /bin/grep 'set $.index_prefix = "{{ __test_metrics_index }}"' {{
+        __test_ovirt_collectd_conf }}
       changed_when: false
 
-    - name: Check input file is "{{ __test_engine_input }}" in "{{ __test_ovirt_engine_conf }}"
-      command: /bin/grep 'input(type="imfile" file="{{ __test_engine_input }}" tag="{{ __test_engine_name }}"' {{ __test_ovirt_engine_conf }}
+    - name: Check input file is "{{ __test_engine_input }}" in "{{ __test_ovirt_engine_conf
+        }}"
+      command: /bin/grep 'input(type="imfile" file="{{ __test_engine_input }}" tag="{{
+        __test_engine_name }}"' {{ __test_ovirt_engine_conf }}
       changed_when: false
 
-    - name: Check index_prefix is "{{ __test_logs_index }}" in "{{ __test_ovirt_engine_conf }}"
-      command: /bin/grep 'set $.index_prefix = "{{ __test_logs_index }}"' {{ __test_ovirt_engine_conf }}
+    - name: Check index_prefix is "{{ __test_logs_index }}" in "{{ __test_ovirt_engine_conf
+        }}"
+      command: /bin/grep 'set $.index_prefix = "{{ __test_logs_index }}"' {{ __test_ovirt_engine_conf
+        }}
       changed_when: false
 
-    - name: Check input file is "{{ __test_vdsm_input }}" in "{{ __test_ovirt_vdsm_conf }}"
-      command: /bin/grep 'input(type="imfile" file="{{ __test_vdsm_input }}" tag="{{ __test_vdsm_name }}"' {{ __test_ovirt_vdsm_conf }}
+    - name: Check input file is "{{ __test_vdsm_input }}" in "{{ __test_ovirt_vdsm_conf
+        }}"
+      command: /bin/grep 'input(type="imfile" file="{{ __test_vdsm_input }}" tag="{{
+        __test_vdsm_name }}"' {{ __test_ovirt_vdsm_conf }}
       changed_when: false
 
-    - name: Check index_prefix is "{{ __test_logs_index }}" in "{{ __test_ovirt_vdsm_conf }}"
-      command: /bin/grep 'set $.index_prefix = "{{ __test_logs_index }}"' {{ __test_ovirt_vdsm_conf }}
+    - name: Check index_prefix is "{{ __test_logs_index }}" in "{{ __test_ovirt_vdsm_conf
+        }}"
+      command: /bin/grep 'set $.index_prefix = "{{ __test_logs_index }}"' {{ __test_ovirt_vdsm_conf
+        }}
       changed_when: false

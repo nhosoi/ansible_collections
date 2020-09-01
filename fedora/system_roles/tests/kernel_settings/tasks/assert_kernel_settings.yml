@@ -4,8 +4,8 @@
   vars:
     ffparams:
       files:
-        - "tests_{{ ansible_distribution }}_\
-          {{ ansible_distribution_major_version }}.yml"
+        - "tests_{{ ansible_distribution }}_{{ ansible_distribution_major_version\
+          \ }}.yml"
         - "tests_default.yml"
       paths:
         - vars

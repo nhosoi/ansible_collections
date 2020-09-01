@@ -216,7 +216,7 @@ The `tuned` package is required for the default provider.
     kernel_settings_transparent_hugepages: madvise
     kernel_settings_transparent_hugepages_defrag: defer
   roles:
-    - linux-system-roles.kernel_settings
+    - fedora.system_roles.kernel_settings
 ```
 
 ## Warnings

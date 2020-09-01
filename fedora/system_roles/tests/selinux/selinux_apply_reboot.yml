@@ -3,7 +3,7 @@
     - include_role:
         name: fedora.system_roles.selinux
   rescue:
-    # Fail if failed for a different reason than selinux_reboot_required.
+  # Fail if failed for a different reason than selinux_reboot_required.
     - name: handle errors
       fail:
         msg: "role failed"

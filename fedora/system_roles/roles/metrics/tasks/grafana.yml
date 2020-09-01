@@ -18,7 +18,8 @@
 
 - name: Ensure graphing service runtime settings are configured
   uri:
-    url: "http://{{ __metrics_grafana_user }}:{{ __metrics_grafana_password }}@{{ __metrics_grafana_server }}/api/plugins/performancecopilot-pcp-app/settings"
+    url: "http://{{ __metrics_grafana_user }}:{{ __metrics_grafana_password }}@{{\
+      \ __metrics_grafana_server }}/api/plugins/performancecopilot-pcp-app/settings"
     force_basic_auth: yes
     headers:
       Content-Type: application/json

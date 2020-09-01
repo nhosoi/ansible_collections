@@ -154,7 +154,7 @@ Example Playbook
 - hosts: all
 
   roles:
-    - name: linux-system-roles.storage
+    - name: fedora.system_roles.storage
       storage_pools:
         - name: app
           disks:

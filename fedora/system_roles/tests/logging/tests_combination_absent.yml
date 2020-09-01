@@ -24,7 +24,8 @@
 # 6. Check the generated test config file in 3 was updated correctly.
 # 7. Check systemctl status of rsyslog as well as error or specific message in the output.
 #
-- name: Running logging role twice; in the second run, some logging_outputs are absent or eliminated.
+- name: Running logging role twice; in the second run, some logging_outputs are
+    absent or eliminated.
   hosts: all
   become: true
   vars:
@@ -78,7 +79,8 @@
         logging_flows:
           - name: flow_0
             inputs: [basic_input]
-            outputs: [files_test0, files_test1, forwards_severity_and_facility, forwards_facility_only]
+            outputs: [files_test0, files_test1, forwards_severity_and_facility,
+              forwards_facility_only]
           - name: flow_1
             inputs: ["{{ __test_tag }}"]
             outputs: [files_test0, files_test1]
@@ -87,9 +89,10 @@
 
     - include_tasks: set_rsyslog_variables.yml
 
-    # notify restart rsyslogd is executed at the end of this test task.
-    # thus we have to force to invoke handlers
-    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+  # notify restart rsyslogd is executed at the end of this test task.
+  # thus we have to force to invoke handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal
+        sync points
       meta: flush_handlers
 
     - name: Check rsyslog.conf size
@@ -165,9 +168,10 @@
 
     - include_tasks: set_rsyslog_variables.yml
 
-    # notify restart rsyslogd is executed at the end of this test task.
-    # thus we have to force to invoke handlers
-    - name: Force all notified handlers to run at this point, not waiting for normal sync points
+  # notify restart rsyslogd is executed at the end of this test task.
+  # thus we have to force to invoke handlers
+    - name: Force all notified handlers to run at this point, not waiting for normal
+        sync points
       meta: flush_handlers
 
     - name: Check file counts in rsyslog.d are less than no-absent case
@@ -175,7 +179,8 @@
         that: rsyslog_d_file_count.matched <= 8
 
     - name: Check {{ __test_basics_conf }} was updated
-      command: '/bin/grep "# GENERATED BASICS CONFIG FILE" /etc/rsyslog.d/{{ __test_basics_conf }}'
+      command: '/bin/grep "# GENERATED BASICS CONFIG FILE" /etc/rsyslog.d/{{ __test_basics_conf
+        }}'
       register: __result
       changed_when: false
       failed_when: "__result is not failed"

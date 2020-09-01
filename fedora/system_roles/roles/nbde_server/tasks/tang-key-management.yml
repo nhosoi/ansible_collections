@@ -8,8 +8,8 @@
     msg: >
       You need to specify nbde_server_keys_dir and it must be an absolute path
   when: >
-      nbde_server_keys_dir is not defined
-      or not nbde_server_keys_dir.startswith('/')
+    nbde_server_keys_dir is not defined
+    or not nbde_server_keys_dir.startswith('/')
 
 # This task gathers the keys from a tang server, and fills up a
 # nbde_server_keys_to_fetch variable, to be used later in the actual
@@ -33,8 +33,7 @@
     src: "{{ item.path }}"
     dest: "{{ nbde_server_keys_dir }}/{{ inventory_hostname }}/"
     flat: yes
-  loop:
-    "{{ nbde_server_keys_to_fetch.files }}"
+  loop: "{{ nbde_server_keys_to_fetch.files }}"
 
 # This tasks fetches the keys from a single server (run_once), and places it
 # in the top level directory of nbde_server_keys_dir. Keys on the top level
@@ -48,8 +47,7 @@
     src: "{{ item.path }}"
     dest: "{{ nbde_server_keys_dir }}/"
     flat: yes
-  loop:
-    "{{ nbde_server_keys_to_fetch.files }}"
+  loop: "{{ nbde_server_keys_to_fetch.files }}"
 
 # The actual deployment of keys is done by the nbde_server_tang module, using
 # the keys that are available in a tetmporary directory that holds the keys.
@@ -62,7 +60,7 @@
 
 - name: Perform deployment tasks
   block:
-    # This tasks creates the deployment directory.
+  # This tasks creates the deployment directory.
     - name: Prepare deployment directory - create
       when: nbde_server_deploy_keys | bool
       tempfile:
@@ -70,8 +68,8 @@
         suffix: nbde_server_keys
       register: nbde_server_tempdir
 
-    # This task gathers the common keys and fills up a nbde_server_common_keys
-    # variable, to be used later when preparing for deployment.
+  # This task gathers the common keys and fills up a nbde_server_common_keys
+  # variable, to be used later when preparing for deployment.
     - name: Gather common keys to be deployed
       find:
         paths: "{{ nbde_server_keys_dir }}"
@@ -79,8 +77,8 @@
       delegate_to: localhost
       register: nbde_server_common_keys
 
-    # This task copies the common keys to the deployment temp directory,
-    # to be deployed later by the nbde_server_tang module.
+  # This task copies the common keys to the deployment temp directory,
+  # to be deployed later by the nbde_server_tang module.
     - name: Prepare for deploying keys - common keys
       when:
         - nbde_server_deploy_keys | bool
@@ -93,8 +91,8 @@
         mode: 0400
       loop: "{{ nbde_server_common_keys.files }}"
 
-    # This task gathers the specific keys fills up a nbde_server_host_keys
-    # variable, to be used later when preparing for deployment.
+  # This task gathers the specific keys fills up a nbde_server_host_keys
+  # variable, to be used later when preparing for deployment.
     - name: Gather host keys to be deployed
       find:
         paths: "{{ nbde_server_keys_dir }}/{{ inventory_hostname }}"
@@ -102,8 +100,8 @@
       delegate_to: localhost
       register: nbde_server_host_keys
 
-    # This task copies the host keys to the deployment temp directory,
-    # to be deployed later by the nbde_server_tang module.
+  # This task copies the host keys to the deployment temp directory,
+  # to be deployed later by the nbde_server_tang module.
     - name: Prepare for deploying keys - host keys
       when:
         - nbde_server_deploy_keys | bool
@@ -116,14 +114,14 @@
         mode: 0400
       loop: "{{ nbde_server_host_keys.files }}"
 
-    # This tasks perform the actual deploy. The keys are in available in
-    # the deployment temp dir and the nbde_server_tang module works
-    # with those.
+  # This tasks perform the actual deploy. The keys are in available in
+  # the deployment temp dir and the nbde_server_tang module works
+  # with those.
     - name: Ensure we perform the keys deployment to tang
       when:
         - nbde_server_deploy_keys | bool
         - nbde_server_tempdir.path is defined
-      nbde_server_tang:
+      fedora.system_roles.nbde_server_tang:
         state: keys-deployed
         keydir: "{{ __nbde_server_keydir }}"
         keygen: "{{ __nbde_server_keygen }}"

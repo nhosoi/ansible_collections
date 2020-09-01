@@ -39,7 +39,7 @@ Example Playbook
 - name: Deploy session recording
   hosts: all
   roles:
-    - linux-system-roles.tlog
+    - fedora.system_roles.tlog
   vars:
     tlog_scope_sssd: some
     tlog_users_sssd:

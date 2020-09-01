@@ -1,0 +1,5 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - fedora.system_roles.__performancecopilot_pcp
