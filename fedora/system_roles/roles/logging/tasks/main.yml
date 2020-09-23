@@ -123,5 +123,5 @@
     __rsyslog_purge_original_conf: "{{ logging_purge_confs }}"
     __rsyslog_system_log_dir: "{{ logging_system_log_dir }}"
   include_role:
-    name: "fedora.system_roles.__rsyslog"
+    name: "fedora.system_roles.rsyslog"
   when: logging_provider == 'rsyslog'

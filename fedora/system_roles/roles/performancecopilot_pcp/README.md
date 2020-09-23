@@ -64,7 +64,7 @@ Basic PCP setup with monitoring suited for a single host.
 
     - hosts: all
       roles:
-        - role: fedora.system_roles.__performancecopilot_pcp
+        - role: fedora.system_roles.performancecopilot_pcp
           vars:
             pcp_pmlogger_interval: 10
             pcp_optional_agents: [dm, nfsclient, openmetrics]
@@ -75,7 +75,7 @@ Central PCP setup for monitoring of several remote hosts.
 
     - hosts: monitoring
       roles:
-        - role: fedora.system_roles.__performancecopilot_pcp
+        - role: fedora.system_roles.performancecopilot_pcp
           vars:
             pcp_pmlogger_interval: 10
             pcp_pmlogger_discard: 5

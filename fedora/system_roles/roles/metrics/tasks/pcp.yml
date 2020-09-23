@@ -8,5 +8,5 @@
     pcp_rest_api: "{{ metrics_query_service|d(false)|bool or metrics_graph_service|d(false)|bool\
       \ }}"
   include_role:
-    name: "fedora.system_roles.__performancecopilot_pcp"
+    name: "fedora.system_roles.performancecopilot_pcp"
   when: metrics_provider == 'pcp'

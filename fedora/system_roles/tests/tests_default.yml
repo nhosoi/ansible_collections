@@ -1,4 +1,3 @@
----
 - name: Ensure that the role runs with default parameters
   hosts: all
   roles:
@@ -6,9 +5,7 @@
     - fedora.system_roles.kdump
     - fedora.system_roles.kernel_settings
     - fedora.system_roles.logging
-    - fedora.system_roles.__rsyslog
     - fedora.system_roles.metrics
-    - fedora.system_roles.__performancecopilot_pcp
     - fedora.system_roles.nbde_client
     - fedora.system_roles.nbde_server
     - fedora.system_roles.network

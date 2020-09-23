@@ -52,7 +52,7 @@ parted:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.size import Size
+from ansible_collections.fedora.system_roles.plugins.module_utils.storage.size import Size
 
 def run_module():
     # available arguments/parameters that a user can pass

@@ -57,7 +57,7 @@ will set your global name and email, althought you can change it later for every
 
 ```
 git config --global user.name "Jane Doe"
-git config --global user.email janedoe@example.com`
+git config --global user.email janedoe@example.com
 ```
 
 The git editor is your system's default. If you feel more comfortable with a different
@@ -288,6 +288,64 @@ ansible-playbook --skip-tags tests::cleanup \
     -e "__network_debug_flags=disable-checkpoints" \
     -i testhost, tests/playbooks/tests_802_1x.yml
 ```
+
+### Integration tests with podman
+1. Create `~/.ansible/collections/ansible_collections/containers/podman/` if this
+directory does not exist and `cd` into this directory.
+```bash
+mkdir -p ~/.ansible/collections/ansible_collections/containers/podman/
+cd ~/.ansible/collections/ansible_collections/containers/podman/
+```
+
+2. Clone the collection plugins for Ansible-Podman into the current directory.
+```bash
+git clone https://github.com/containers/ansible-podman-collections.git .
+```
+
+3. Change directory into the `network/tests`, `network` is the Repo you cloned from
+your local fork.
+```bash
+cd ~/network/tests
+```
+
+
+4. Use podman with `-d` to run in the background (daemon). Use `c7` because
+`centos/systemd` is centos7.
+```bash
+podman run --name c7 --rm --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -d registry.centos.org/centos/systemd
+```
+
+5. Use `podman unshare` first to run "podman mount" in root mode, use `-vi` to run
+ansible as inventory in verbose mode, use `-c podman` to use collection plugins. Note,
+the following tests are currently not working with podman:
+- `tests_802_1x_nm.yml` 
+- `tests_802_1x_updated_nm.yml`
+- `tests_bond_initscripts.yml`
+- `tests_bond_nm.yml`
+- `tests_bridge_initscripts.yml`
+- `tests_bridge_nm.yml`
+- `tests_default_nm.yml`
+- `tests_ethernet_nm.yml`
+- `tests_reapply_nm.yml`
+- `tests_states_nm.yml`
+- `tests_vlan_mtu_initscripts.yml`
+- `tests_vlan_mtu_nm.yml`
+- `tests_wireless_nm.yml`
+
+```bash
+podman unshare
+ansible-playbook -vi c7, -c podman tests_provider_nm.yml
+```
+
+6. NOTE that this leaves the container running in the background, to kill it:
+```bash
+> podman ps
+CONTAINER ID  IMAGE                                      COMMAND         CREATED         STATUS             PORTS  NAMES
+02a45f9d53df  registry.centos.org/centos/systemd:latest  /usr/sbin/init  13 minutes ago  Up 13 minutes ago         c7
+> podman stop 02a45f9d53df
+> podman rm 02a45f9d53df
+```
+
 
 ### Continuous integration
 
