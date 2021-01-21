@@ -1,0 +1,15 @@
+# Relative import is not support by ansible 2.8 yet
+# pylint: disable=import-error, no-name-in-module
+# try:
+#     from ansible.module_utils.network_lsr.nm.provider import (  # noqa:E501
+#         NetworkManagerProvider,
+#     )
+# except ImportError:
+#     raise ImportError("import NetworkManagerProvider failed by ImportError")
+# except ValueError:
+#     raise ValueError("NetworkManager package is missing?")
+from ansible.module_utils.network_lsr.nm import provider  # noqa:E501
+
+# pylint: enable=import-error, no-name-in-module
+
+provider.NetworkManagerProvider
