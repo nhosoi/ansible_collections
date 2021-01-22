@@ -1,0 +1,4 @@
+---
+- hosts: all
+  roles:
+    - redhat.rhel_system_roles.cockpit

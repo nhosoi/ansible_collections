@@ -1,4 +1,0 @@
----
-- hosts: all
-  roles:
-    - fedora.linux_system_roles.cockpit
