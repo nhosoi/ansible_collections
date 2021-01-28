@@ -4,7 +4,7 @@
   vars:
     network_connections:
 
-    # Create a bond profile, which is the parent of VLAN.
+  # Create a bond profile, which is the parent of VLAN.
       - name: prod2
         state: up
         type: bond
@@ -16,15 +16,15 @@
           mode: active-backup
           miimon: 110
 
-    # enslave an ethernet to the bond
+  # enslave an ethernet to the bond
       - name: prod2-slave1
         state: up
         type: ethernet
         interface_name: "{{ network_interface_name2 }}"
         master: prod2
 
-    # on top of it, create a VLAN with ID 100 and static
-    # addressing
+  # on top of it, create a VLAN with ID 100 and static
+  # addressing
       - name: prod2.100
         state: up
         type: vlan

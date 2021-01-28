@@ -8,7 +8,7 @@
         type: infiniband
         interface_name: ib0
 
-    # Create a simple infiniband profile
+  # Create a simple infiniband profile
       - name: ib0-10
         interface_name: ib0.000a
         type: infiniband

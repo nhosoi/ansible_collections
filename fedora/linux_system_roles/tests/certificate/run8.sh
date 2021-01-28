@@ -7,7 +7,7 @@ if [ -d "$artifacts" ]; then
 fi
 mkdir "$artifacts"
 
-tests="
+tests="testsbasic_ipa.yml testskey_size.yml testsprovider testsbasic_self_signed.yml testskey_usage_and_extended_key_usage.yml testsrun_hooks testsdefault.yml testsmany_self_signed.yml testssubject_complex testsdns_ip_email.yml testsno_auto_renew.yml testssubject testsfs_attrs.yml testsnot_wait_for_cert.yml testswrong_provider testsinclude_vars_from_parent testsprincipal"
 
 for atest in $tests
 do

@@ -11,22 +11,20 @@
   when: item is file
 
 - name: Ensure PCP SQL Server agent config dir exists
-  ansible.builtin.file:
+  file:
     path: "{{ __mssql_conf_dir }}"
     state: directory
-    mode: '0755'
-  become: yes
+    mode: 0755
 
 - name: Ensure PCP SQL Server agent is configured
   template:
     src: mssql.conf.j2
     dest: "{{ __mssql_conf }}"
     mode: 0600
-  become: yes
 
 - name: Ensure PCP SQL Server metrics are available
   import_role:
-    name: pcp
+    name: performancecopilot_metrics_pcp
   vars:
     pcp_optional_agents: [mssql]
     pcp_optional_packages: "{{ __mssql_packages_extra }}"
